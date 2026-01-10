@@ -56,6 +56,15 @@ class VideoDownloader:
                 'quiet': True,
                 'no_warnings': True,
                 'extract_flat': False,
+                # Увеличенные таймауты для медленных серверов (Rutube, VK)
+                'socket_timeout': 60,  # 60 секунд вместо 20
+                # Дополнительные опции для стабильности
+                'retries': 3,
+                'fragment_retries': 3,
+                # User-agent для обхода блокировок
+                'http_headers': {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                },
             }
             
             def _extract():
@@ -190,6 +199,14 @@ class VideoDownloader:
                 'no_warnings': False,
                 # Merge в MP4 если нужно объединить видео и аудио
                 'merge_output_format': 'mp4',
+                # Увеличенные таймауты для медленных серверов
+                'socket_timeout': 60,
+                'retries': 5,
+                'fragment_retries': 5,
+                # User-agent для обхода блокировок
+                'http_headers': {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                },
             }
             
             # Субтитры пока отключены (требуется ffmpeg для встраивания)
@@ -272,6 +289,13 @@ class VideoDownloader:
                 'outtmpl': output_template,
                 'quiet': True,
                 'no_warnings': True,
+                # Увеличенные таймауты
+                'socket_timeout': 60,
+                'retries': 5,
+                'fragment_retries': 5,
+                'http_headers': {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                },
             }
             
             # Добавление callback для прогресса
