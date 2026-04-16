@@ -4,10 +4,40 @@
 
 ## Технологический стек
 
-- **Frontend:** React, Vite, TypeScript, Tailwind CSS, React Router, Axios, Socket.io-client
-- **Backend:** Node.js, Express.js, TypeScript, Socket.io, JWT, bcrypt
-- **Database:** PostgreSQL
-- **ORM:** Prisma
+### Frontend
+| Технология | Версия | Назначение |
+|------------|--------|------------|
+| React | 18.3 | UI-библиотека |
+| TypeScript | 5.6 | Типизация |
+| Vite | 5.4 | Сборщик и dev-сервер |
+| Tailwind CSS | 3.4 | Стилизация |
+| React Router | 6.28 | Маршрутизация |
+| Axios | 1.7 | HTTP-клиент |
+| Socket.io-client | 4.7 | WebSocket для чата |
+
+### Backend
+| Технология | Версия | Назначение |
+|------------|--------|------------|
+| Node.js | 18+ | Runtime |
+| Express | 4.21 | HTTP-сервер |
+| TypeScript | 5.6 | Типизация |
+| Prisma | 5.22 | ORM |
+| Socket.io | 4.7 | WebSocket-сервер |
+| JWT (jsonwebtoken) | 9.0 | Аутентификация |
+| bcrypt | 5.1 | Хеширование паролей |
+| Helmet | 7.1 | Безопасность HTTP-заголовков |
+| express-rate-limit | 7.4 | Ограничение запросов |
+| validator | 13.12 | Валидация и санитизация |
+| CORS | 2.8 | Cross-Origin запросы |
+
+### База данных
+| Технология | Назначение |
+|------------|------------|
+| PostgreSQL | 14+ | Реляционная БД |
+
+### Инструменты разработки
+- **tsx** — запуск TypeScript без предварительной компиляции
+- **PostCSS** + **Autoprefixer** — обработка CSS
 
 ## Требования
 

@@ -18,9 +18,7 @@ async function adminCheck(req: AuthRequest, res: any, next: any) {
   }
   next();
 }
-
 adminRouter.use(authMiddleware, adminCheck);
-
 adminRouter.get('/users', async (_req, res, next) => {
   try {
     const users = await prisma.user.findMany({
