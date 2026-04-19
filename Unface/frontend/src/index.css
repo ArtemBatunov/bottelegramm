@@ -2,8 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  background-color: #f5f5f0;
+@layer base {
+  body {
+    margin: 0;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    color: #2d3436;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .dark body {
+    color: #e8eaed;
+    background-color: #0f1218;
+  }
+}
+
+@layer utilities {
+  .bg-watercolor {
+    background-color: #eef3ea;
+    background-image:
+      radial-gradient(ellipse 90% 55% at 15% 20%, rgba(168, 230, 207, 0.42) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 45% at 85% 75%, rgba(255, 211, 225, 0.38) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 50% at 50% 100%, rgba(245, 230, 200, 0.45) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .dark .bg-watercolor {
+    background-color: #0f1218;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% 15%, rgba(60, 120, 90, 0.2) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 45% at 85% 80%, rgba(120, 70, 90, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 40% at 50% 100%, rgba(40, 50, 65, 0.4) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .input-pill {
+    @apply w-full pl-4 pr-4 py-3 rounded-full border border-gray-200/80 bg-white/90 placeholder:text-gray-400 shadow-sm transition focus:outline-none;
+    color: #2d3436;
+  }
+
+  .input-pill:focus {
+    border-color: #8fd9a8;
+    box-shadow: 0 0 0 2px rgba(143, 217, 168, 0.45);
+  }
+
+  .dark .input-pill {
+    color: #e8eaed;
+    background: rgba(30, 33, 40, 0.92);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .dark .input-pill:focus {
+    border-color: #8fd9a8;
+    box-shadow: 0 0 0 2px rgba(143, 217, 168, 0.3);
+  }
+
+  .dark .btn-pill-secondary {
+    color: #e8eaed;
+    background: rgba(30, 33, 40, 0.92);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .dark .btn-pill-secondary:hover {
+    background: rgba(40, 44, 52, 0.95);
+  }
+
+  .btn-pill-primary {
+    @apply w-full py-3.5 rounded-full font-semibold uppercase tracking-wide text-white shadow-md transition;
+    background: linear-gradient(180deg, #e8a598 0%, #d97a6a 100%);
+    @apply hover:brightness-105 active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-pill-secondary {
+    @apply w-full py-3.5 rounded-full font-semibold uppercase tracking-wide bg-white/90 border border-gray-200 shadow-sm transition hover:bg-white hover:shadow;
+    color: #2d3436;
+  }
 }

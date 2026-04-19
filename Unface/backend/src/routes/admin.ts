@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { prisma } from '../lib/prisma';
 import { authMiddleware, AuthRequest } from '../middleware/auth';
-import { sanitizeString } from '../utils/sanitize';
 import { AppError } from '../middleware/errorHandler';
 
 export const adminRouter = Router();
@@ -76,6 +75,51 @@ adminRouter.get('/reports', async (_req, res, next) => {
   }
 });
 
+adminRouter.get('/chats/:chatId', async (req: AuthRequest, res, next) => {
+  try {
+    const chatId = parseInt(req.params.chatId, 10);
+    if (isNaN(chatId)) {
+      throw new AppError('Некорректный ID чата', 400);
+    }
+
+    const chat = await prisma.chat.findUnique({
+      where: { id: chatId },
+      include: {
+        user1: { select: { id: true, email: true } },
+        user2: { select: { id: true, email: true } },
+        messages: {
+          orderBy: { createdAt: 'asc' },
+          select: {
+            id: true,
+            text: true,
+            userId: true,
+            createdAt: true,
+            user: { select: { id: true, email: true } },
+          },
+        },
+      },
+    });
+
+    if (!chat) {
+      throw new AppError('Чат не найден', 404);
+    }
+
+    res.json({
+      chat: {
+        id: chat.id,
+        status: chat.status,
+        reportStatus: chat.reportStatus,
+        createdAt: chat.createdAt,
+        user1: chat.user1,
+        user2: chat.user2,
+        messages: chat.messages,
+      },
+    });
+  } catch (e) {
+    next(e);
+  }
+});
+
 adminRouter.post('/ban-user', async (req: AuthRequest, res, next) => {
   try {
     const { userId } = req.body;
@@ -91,6 +135,26 @@ adminRouter.post('/ban-user', async (req: AuthRequest, res, next) => {
     });
 
     res.json({ message: 'Пользователь заблокирован' });
+  } catch (e) {
+    next(e);
+  }
+});
+
+adminRouter.post('/unban-user', async (req: AuthRequest, res, next) => {
+  try {
+    const { userId } = req.body;
+    const id = parseInt(userId, 10);
+
+    if (isNaN(id)) {
+      throw new AppError('Некорректный ID пользователя', 400);
+    }
+
+    await prisma.user.update({
+      where: { id },
+      data: { banStatus: false },
+    });
+
+    res.json({ message: 'Пользователь разблокирован' });
   } catch (e) {
     next(e);
   }

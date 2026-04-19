@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { BrandLogo } from '../components/BrandLogo';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -26,41 +27,47 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-pastel-gray flex items-center justify-center p-6">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-8">
-        <h1 className="text-2xl font-bold text-center mb-6">Вход</h1>
+    <div className="min-h-screen bg-watercolor flex items-center justify-center p-6">
+      <div className="w-full max-w-sm bg-white/95 dark:bg-gray-900/95 rounded-[2rem] shadow-card-lg p-8 border border-white/60 dark:border-gray-700/80">
+        <div className="flex justify-center mb-8">
+          <BrandLogo />
+        </div>
+        <h2 className="text-xl font-semibold text-center text-charcoal dark:text-gray-100 mb-6">Вход</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 ml-1">Электронная почта</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pastel-green focus:border-transparent"
+              className="input-pill"
+              placeholder="you@school.ru"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Пароль</label>
+            <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 ml-1">Пароль</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pastel-green focus:border-transparent"
+              className="input-pill"
+              placeholder="••••••••"
               required
             />
           </div>
-          {error && <p className="text-red-600 text-sm">{error}</p>}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 bg-gray-700 text-white rounded-lg font-medium hover:bg-gray-800 disabled:opacity-50"
-          >
-            {loading ? 'Вход...' : 'Вход'}
+          {error && (
+            <p className="text-red-600 dark:text-red-400 text-sm text-center bg-red-50 dark:bg-red-950/40 rounded-xl py-2 px-3">{error}</p>
+          )}
+          <button type="submit" disabled={loading} className="btn-pill-primary mt-2">
+            {loading ? 'Вход…' : 'Вход'}
           </button>
         </form>
-        <p className="mt-4 text-center text-sm text-gray-600">
-          Нет аккаунта? <Link to="/register" className="text-pastel-green font-medium">Регистрация</Link>
+        <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+          Нет аккаунта?{' '}
+          <Link to="/register" className="text-brand-coralDeep font-semibold hover:underline">
+            Регистрация
+          </Link>
         </p>
       </div>
     </div>

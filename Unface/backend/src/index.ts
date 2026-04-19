@@ -12,6 +12,7 @@ import { chatRouter } from './routes/chat';
 import { adminRouter } from './routes/admin';
 import { errorHandler } from './middleware/errorHandler';
 import { setupSocket } from './socket';
+import { attachSocketIo } from './lib/socketIo';
 
 const app = express();
 const httpServer = createServer(app);
@@ -22,6 +23,8 @@ const io = new Server(httpServer, {
     methods: ['GET', 'POST'],
   },
 });
+
+attachSocketIo(io);
 
 // Security middleware
 app.use(helmet());

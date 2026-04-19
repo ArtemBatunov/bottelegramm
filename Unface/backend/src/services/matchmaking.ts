@@ -15,27 +15,11 @@ export async function findMatch(userId: number): Promise<number | null> {
   const maxBirth = new Date(user.birthDate);
   maxBirth.setFullYear(maxBirth.getFullYear() + 1);
 
-  // Users from same school, age ±1, not in chat, not previously chatted
-  const previousChatUserIds = await prisma.chat.findMany({
-    where: {
-      OR: [{ user1Id: userId }, { user2Id: userId }],
-    },
-    select: {
-      user1Id: true,
-      user2Id: true,
-    },
-  });
-
-  const excludedIds = new Set<number>([userId]);
-  previousChatUserIds.forEach((c) => {
-    excludedIds.add(c.user1Id);
-    excludedIds.add(c.user2Id);
-  });
-
+  // Та же школа, возраст ±1 год, в поиске; можно снова подобрать того, с кем уже был чат
   const candidates = await prisma.user.findMany({
     where: {
       schoolId: user.schoolId,
-      id: { notIn: Array.from(excludedIds) },
+      id: { not: userId },
       chatStatus: 'searching',
       banStatus: false,
       birthDate: {

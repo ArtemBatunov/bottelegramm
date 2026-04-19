@@ -3,6 +3,7 @@ import { prisma } from '../lib/prisma';
 import { authMiddleware, AuthRequest } from '../middleware/auth';
 import { sanitizeString } from '../utils/sanitize';
 import { AppError } from '../middleware/errorHandler';
+import { emitChatClosed } from '../lib/socketIo';
 
 export const chatRouter = Router();
 
@@ -105,8 +106,15 @@ chatRouter.post('/report', async (req: AuthRequest, res, next) => {
 
     await prisma.chat.update({
       where: { id: chat.id },
-      data: { reportStatus: 'pending' },
+      data: { reportStatus: 'pending', status: 'closed' },
     });
+
+    await prisma.user.updateMany({
+      where: { id: { in: [chat.user1Id, chat.user2Id] } },
+      data: { chatStatus: 'idle' },
+    });
+
+    emitChatClosed(chat.id);
 
     res.status(201).json({ message: 'Жалоба отправлена' });
   } catch (e) {
