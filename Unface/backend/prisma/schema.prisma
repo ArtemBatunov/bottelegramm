@@ -52,7 +52,12 @@ model Message {
   id        Int      @id @default(autoincrement())
   chatId    Int      @map("chat_id")
   userId    Int      @map("user_id")
-  text      String
+  // plaintext оставлен nullable для обратной совместимости/миграции
+  text      String?
+  textEncrypted Bytes? @map("text_encrypted")
+  textIv        Bytes? @map("text_iv")
+  textTag       Bytes? @map("text_tag")
+  encryptionVersion Int? @map("encryption_version")
   createdAt DateTime @default(now()) @map("created_at")
 
   chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
